@@ -2,6 +2,8 @@ from room import Room
 from player import Player
 import textwrap
 
+wrapper = textwrap.TextWrapper(width=79)
+
 # Declare all the rooms
 
 room = {
@@ -41,9 +43,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-player1 = Player()
-player1.room = room['outside']
-wrapper = textwrap.TextWrapper(width=79)
+player1 = Player("Spencer Adams", room['outside'])
 
 # Write a loop that:
 #
@@ -61,8 +61,8 @@ user_input = ''
 while user_input != 'q':
     print("Your current room is:")
     print("\n")
-    print(f"{player1.room.name}:")
-    print(wrapper.fill(text=player1.room.description))
+    print(f"{player1.current_room.name}:")
+    print(wrapper.fill(text=player1.current_room.description))
     print("\n")
     prompt = "Please enter a direction you wish to move (n, s, e, w), or q to exit: \n"
     user_input = input(prompt)
@@ -78,15 +78,15 @@ while user_input != 'q':
             f"\n'{user_input}' is not one of the accpeted directions (n, s, e, w, q). Please try again. \n")
         continue
 
-    if (user_input == 'n') & (hasattr(player1.room, 'n_to')):
-        player1.room = player1.room.n_to
-    elif (user_input == 's') & (hasattr(player1.room, 's_to')):
-        player1.room = player1.room.s_to
-    elif (user_input == 'e') & (hasattr(player1.room, 'e_to')):
-        player1.room = player1.room.e_to
-    elif (user_input == 'w') & (hasattr(player1.room, 'w_to')):
-        player1.room = player1.room.w_to
+    if (user_input == 'n') & (hasattr(player1.current_room, 'n_to')):
+        player1.current_room = player1.current_room.n_to
+    elif (user_input == 's') & (hasattr(player1.current_room, 's_to')):
+        player1.current_room = player1.current_room.s_to
+    elif (user_input == 'e') & (hasattr(player1.current_room, 'e_to')):
+        player1.current_room = player1.current_room.e_to
+    elif (user_input == 'w') & (hasattr(player1.current_room, 'w_to')):
+        player1.current_room = player1.current_room.w_to
     else:
         print(
-            f"\nYou are not able to move '{user_input}' while you are in the room '{player1.room.name}'")
+            f"\nYou are not able to move '{user_input}' while you are in the room '{player1.current_room.name}'")
         print("Please pick another direction. \n")
